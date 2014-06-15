@@ -53,8 +53,32 @@ module.exports = function(grunt) {
 				files: {
 					"dist/jquery.boilerplate.js": "src/jquery.boilerplate.coffee"
 				}
+			},
+			dist: {
+
 			}
+		},
+
+		// Sass compilation
+
+		sass: {
+			compile: {
+				options: {
+					style: 'expanded'
+				},
+				files: {
+					"css/style.css": "scss/style.scss"
+				}
+			}
+		},
+
+		// Watch Task
+
+		watch: {
+			files: ['**/*.js', '**/*.scss'],
+			tasks: ["jshint", "concat", "uglify", "sass"]
 		}
+
 
 	});
 
@@ -63,7 +87,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 	grunt.loadNpmTasks("grunt-contrib-coffee");
 
-	grunt.registerTask("default", ["jshint", "concat", "uglify"]);
+	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-sass');
+
+	grunt.registerTask("default", ["jshint", "concat", "uglify", "sass", "watch"]);
 	grunt.registerTask("travis", ["jshint"]);
 
 };
